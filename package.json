@@ -1,0 +1,27 @@
+{
+  "name": "swagger-server",
+  "version": "1.0.0",
+  "description": "Autogenerates JSON swagger properties based on a decorator syntax",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markussaa/node-swagger-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markussaa/node-swagger-server/issues"
+  },
+  "homepage": "https://github.com/markussaa/node-swagger-server#readme",
+  "devDependencies": {
+    "@types/node": "^18.14.2",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
