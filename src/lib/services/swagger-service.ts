@@ -14,6 +14,25 @@ export class SwaggerService {
   }
 
   composeSwaggerJson(endpoint: SwaggerEndpoint): string {
-    return JSON.stringify(endpoint);
+    const swagger = {
+      swagger: "2.0",
+      info: {},
+      basePath: "/api/v1",
+      consumes: "application/json",
+      produces: "application/json",
+      paths: {
+        [endpoint.path]: {
+          [endpoint.method]: {
+            tags: endpoint.tags,
+            summary: endpoint.summary,
+            description: endpoint.description,
+            parameters: endpoint.parameters,
+            responses: endpoint.responses,
+          },
+        },
+      },
+    };
+
+    return JSON.stringify(swagger);
   }
 }

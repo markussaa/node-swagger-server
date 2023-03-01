@@ -11,6 +11,7 @@ export function Swagger(endpoint: SwaggerEndpoint) {
 
     const result = service.composeSwaggerJson(endpoint);
 
-    console.log(JSON.parse(result));
+    console.log(result);
+    //return result;
   };
 }

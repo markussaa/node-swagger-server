@@ -3,7 +3,7 @@ import { Swagger } from "../lib/decorator";
 
 export class RootController {
   @Swagger({
-    method: "GET",
+    method: "get",
     path: "/",
     tags: ["HelloWorld"],
     summary: "Get hello world object",
