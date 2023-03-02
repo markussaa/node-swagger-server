@@ -3,16 +3,12 @@ import { SwaggerEndpoint } from "../models/swagger-endpoint";
 import * as SwaggerUI from "swagger-ui-express";
 
 export class SwaggerService {
-  private static swagger: any;
-  private static app: any;
   private static instance: SwaggerService;
 
-  private constructor(app: any, swaggerSetup: SwaggerSetup) {
-    SwaggerService.app = app;
-    SwaggerService.swagger = { ...swaggerSetup, paths: {} };
-  }
+  private static endpoints: SwaggerEndpoint[] = [];
 
   static getInstance(): SwaggerService {
+    console.log("Instance");
     if (!SwaggerService.instance) {
       SwaggerService.instance = new SwaggerService();
     }
@@ -20,14 +16,45 @@ export class SwaggerService {
     return SwaggerService.instance;
   }
 
-  private static serveSwagger(): void {
-    SwaggerService.app.use(
-      "/swagger",
-      SwaggerUI.serve,
-      SwaggerUI.setup(SwaggerService.swagger)
-    );
+  static build(swaggerSetup: SwaggerSetup): object {
+    let blueprint = { ...swaggerSetup, paths: {} };
+
+    SwaggerService.endpoints.forEach((endpoint: SwaggerEndpoint) => {
+      let hejsan = {
+        [endpoint.method]: {
+          tags: endpoint.tags,
+          summary: endpoint.summary,
+          description: endpoint.description,
+          parameters: endpoint.parameters,
+          responses: endpoint.responses,
+        },
+      };
+
+      blueprint.paths.hasOwnProperty(endpoint.path) ? blueprint.paths
+
+      this.swagger.paths[endpoint.path] = {
+        ...(this.swagger.paths[endpoint.path]
+          ? this.swagger.paths[endpoint.path]
+          : {}),
+        hejsan,
+      };
+
+      
+      blueprint.paths = { ...blueprint.paths, endpoint };
+      
+      
+    });
+    return blueprint;
   }
 
+  static serve(app: any, swaggerSetup: SwaggerSetup) {
+    let swaggerJson = swaggerSetup;
+  }
+  /*
+  private serveSwagger(app: any, swaggerSetup: SwaggerSetup): void {
+    app.use("/swagger", SwaggerUI.serve, SwaggerUI.setup(swagger));
+  }
+*/
   static addEndpoint(endpoint: SwaggerEndpoint): void {
     /* const swagger = {
       swagger: "2.0",
@@ -47,7 +74,7 @@ export class SwaggerService {
         },
       },
     }; */
-
+    /*
     let hejsan = {
       [endpoint.method]: {
         tags: endpoint.tags,
@@ -58,13 +85,17 @@ export class SwaggerService {
       },
     };
 
-    SwaggerService.swagger.paths[endpoint.path] = {
-      ...(SwaggerService.swagger.paths[endpoint.path]
-        ? SwaggerService.swagger.paths[endpoint.path]
+    this.swagger.paths[endpoint.path] = {
+      ...(this.swagger.paths[endpoint.path]
+        ? this.swagger.paths[endpoint.path]
         : {}),
       hejsan,
     };
 
-    SwaggerService.serveSwagger();
+    this.serveSwagger();
+    */
+
+    SwaggerService.endpoints.push(endpoint);
+    console.log(SwaggerService.endpoints);
   }
 }

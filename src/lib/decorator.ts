@@ -7,6 +7,7 @@ export function Swagger(endpoint: SwaggerEndpoint) {
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
+    console.log("decorator");
     const service = SwaggerService.addEndpoint(endpoint);
   };
 }

@@ -45,7 +45,5 @@ export interface SwaggerContact {
 }
 
 export interface SwaggerLicense {
-  [key: string]: {
-    name: string;
-  };
+  name: string;
 }
