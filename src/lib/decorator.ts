@@ -7,11 +7,6 @@ export function Swagger(endpoint: SwaggerEndpoint) {
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
-    const service = SwaggerService.getInstance();
-
-    const result = service.composeSwaggerJson(endpoint);
-
-    console.log(result);
-    //return result;
+    const service = SwaggerService.addEndpoint(endpoint);
   };
 }

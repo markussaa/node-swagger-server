@@ -1,9 +1,16 @@
+import { SwaggerSetup } from "./../models/swagger-endpoint";
 import { SwaggerEndpoint } from "../models/swagger-endpoint";
+import * as SwaggerUI from "swagger-ui-express";
 
 export class SwaggerService {
+  private static swagger: any;
+  private static app: any;
   private static instance: SwaggerService;
 
-  private constructor() {}
+  private constructor(app: any, swaggerSetup: SwaggerSetup) {
+    SwaggerService.app = app;
+    SwaggerService.swagger = { ...swaggerSetup, paths: {} };
+  }
 
   static getInstance(): SwaggerService {
     if (!SwaggerService.instance) {
@@ -13,8 +20,16 @@ export class SwaggerService {
     return SwaggerService.instance;
   }
 
-  composeSwaggerJson(endpoint: SwaggerEndpoint): string {
-    const swagger = {
+  private static serveSwagger(): void {
+    SwaggerService.app.use(
+      "/swagger",
+      SwaggerUI.serve,
+      SwaggerUI.setup(SwaggerService.swagger)
+    );
+  }
+
+  static addEndpoint(endpoint: SwaggerEndpoint): void {
+    /* const swagger = {
       swagger: "2.0",
       info: {},
       basePath: "/api/v1",
@@ -31,8 +46,25 @@ export class SwaggerService {
           },
         },
       },
+    }; */
+
+    let hejsan = {
+      [endpoint.method]: {
+        tags: endpoint.tags,
+        summary: endpoint.summary,
+        description: endpoint.description,
+        parameters: endpoint.parameters,
+        responses: endpoint.responses,
+      },
     };
 
-    return JSON.stringify(swagger);
+    SwaggerService.swagger.paths[endpoint.path] = {
+      ...(SwaggerService.swagger.paths[endpoint.path]
+        ? SwaggerService.swagger.paths[endpoint.path]
+        : {}),
+      hejsan,
+    };
+
+    SwaggerService.serveSwagger();
   }
 }
