@@ -30,7 +30,7 @@ export class SwaggerService {
 
   static serve(app: any, swaggerSetup: SwaggerSetup) {
     app.use(
-      "/swagger",
+      "/api/swagger",
       SwaggerUI.serve,
       SwaggerUI.setup(SwaggerService.build(swaggerSetup))
     );
