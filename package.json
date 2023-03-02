@@ -1,6 +1,10 @@
 {
   "name": "swagger-server",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.22.12",
+    "npm": "6.14.16"
+  },
   "description": "Autogenerates JSON swagger properties based on a decorator syntax",
   "main": "./src/index.ts",
   "scripts": {
@@ -12,8 +16,11 @@
     "url": "git+https://github.com/markussaa/node-swagger-server.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Joacim Eberlen & Markus Saarijärvi",
+  "license": "MIT",
+  "directories": {
+    "lib": "src/lib"
+  },
   "bugs": {
     "url": "https://github.com/markussaa/node-swagger-server/issues"
   },
