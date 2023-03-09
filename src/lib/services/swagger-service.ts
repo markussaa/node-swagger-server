@@ -1,11 +1,11 @@
-import { SwaggerSetup } from "./../models/swagger-endpoint";
+import { SwaggerBase } from "./../models/swagger-endpoint";
 import { SwaggerEndpoint } from "../models/swagger-endpoint";
 import * as SwaggerUI from "swagger-ui-express";
 
 export class SwaggerService {
   private static endpoints: SwaggerEndpoint[] = [];
 
-  static build(swaggerSetup: SwaggerSetup): object {
+  static build(swaggerSetup: SwaggerBase): object {
     let paths: any = {};
 
     SwaggerService.endpoints.forEach((endpoint: SwaggerEndpoint) => {
@@ -28,7 +28,7 @@ export class SwaggerService {
     return { ...swaggerSetup, paths };
   }
 
-  static serve(app: any, swaggerSetup: SwaggerSetup) {
+  static serve(app: any, swaggerSetup: SwaggerBase) {
     app.use(
       "/api/swagger",
       SwaggerUI.serve,
